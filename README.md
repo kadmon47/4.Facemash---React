@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# FACEMASH - BUILT IN REACT
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+demo - 
+![](screen-capture.gif)
 
-## Available Scripts
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- A replica of facemash original version with some extra styling
+- Implemented based on Elo rating with a factor of k = 32
+- Shuffling in non repeatedd random order by Fisher-yates algorithm
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Flow of the program
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- First i did load all the image file dynamically in react by using process.env.PUBLIC_FOLDER. If any asset is present in public folder, we can access it dynamically instead of loading the image in the react
+- Shuffle the order in a random order so that for each user that enter's our site, we get a different ordering and get a different set of rating which would drastically make it look more natural rather giving all the users the same set of order.
+- compare each value with increasing index.
+- when clicked on the picture, a ratingCalulator is invoked and rate system is done
+- When all the comparision are finished, we can see the result of the rating or the user has ability to see it directly.
 
-### `npm test`
+I personally avoided database in it, i wanted to make this project as neat as possible and use javascript.
+Now that i grasp of how the flow would work, Its implementable in database with ease.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### How to run
 
-### `npm run build`
+Just run  -  npm start
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+There is no depency or extra library involved.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Some Important Notes
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Fisher - yates algorithm
+--------------------------
+for(let i=arr.length-1;i>0;i--){
+  const j = Math.round(Math.random()*(i+1));
+  const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp
+}
 
-### `npm run eject`
+Elo rating algorithm
+----------------------
+const calculateRating = (winner)=>{
+    var pa = probability(p2Rating,p1Rating);
+    var pb = probability(p1Rating,p2Rating);
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    if(winner===1){
+        let r1 = Math.floor(p1Rating+k*(1-pa));
+        let r2 = Math.floor(p2Rating+k*(0-pb));
+        p1Rating = r1;
+      p2Rating = r2;
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    }else if(winner===2){
+      let r1 = Math.floor(p1Rating+k*(0-pa));
+      let r2 = Math.floor(p2Rating+k*(1-pb));
+      p1Rating = r1;
+      p2Rating = r2;
+    }
+  }
+  
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
